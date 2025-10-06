@@ -67,7 +67,7 @@ In general we will be looking for the following:
   **Yes, this allows us to see how much time you spent on the challenge.**
 
 1. If I have more questions, who can I contact?
-  **Please reach out to [Lucas](https://www.linkedin.com/in/lucas-feitosa-bb883b134/) (Development Coordinator) or via e-mail.**
+  **Please reach out to [Daniel](https://www.linkedin.com/in/daniel-tatsch/) (Development Coordinator) or via e-mail.**
 
 1. The HMI can be a interactive terminal?
   **Yes, you are free to choose the interface, the interaction can be based on terminal, file, graphical, etc.**
