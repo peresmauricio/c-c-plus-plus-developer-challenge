@@ -73,6 +73,43 @@
             return true;
         }
 
+        double primaryDiagonalProduct(size_t pivotRow, size_t pivotCol) const {
+            double product = 1.0;
+            size_t i = pivotRow; 
+            size_t j = pivotCol;
+            std:: cout << "Primary diagonal: ";
+            for (;((i < rows) && (j < cols)); i++, j++) {
+                std::cout << data[i][j] << "*"; 
+                product *= data[i][j];
+            }
+            // If not the main diagonal product, the rows ends without to reach the 
+            // limit of the rows matrix.
+            if(i != rows){
+                product *= primaryDiagonalProduct(i,0);
+            }
+
+            return product;
+        }
+
+        double secondaryDiagonalProduct(size_t pivotRow, size_t pivotCol) const {
+            double product = 1.0;
+            double i = pivotRow; 
+            double j = pivotCol;
+            
+            for (;((j < cols) && (i >= 0)); j++,i--) {
+                std::cout << data[i][j] << "*"; 
+                product *= data[i][j];
+            }
+            // If not reachs the limit of line means that it is a   
+            // parcial product of the seconday diagonal.
+            if(i >= 0){
+                std::cout <<  " ===>"; 
+                product *= secondaryDiagonalProduct(i,0);
+            }
+
+            return product;
+        }
+
         // Determinant calculation based in Leibniz formule  
         double determinant() const {
             if (!isSquare()) {
@@ -101,19 +138,27 @@
                 aplayGaussElimination(pivot, pivot);
             }
 */ 
-            for(int i; i < rows; i++) {
-                
-            }
-
-
-            if (rows == 2) {
+            if((rows == 2) && (cols == 2)){
                 return data[0][0] * data[1][1] - data[0][1] * data[1][0];
-            } else if (rows == 3) {
-                return data[0][0] * (data[1][1] * data[2][2] - data[1][2] * data[2][1]) -
-                       data[0][1] * (data[1][0] * data[2][2] - data[1][2] * data[2][0]) +
-                       data[0][2] * (data[1][0] * data[2][1] - data[1][1] * data[2][0]);
-            } else {
-                throw std::invalid_argument("Determinant calculation is only implemented for 2x2 and 3x3 matrices");
+            } 
+            else if((rows == 3) && (cols == 3))
+            {
+                // Regra de Sarrus for 3x3 matrices.
+                // primary diaonal product  
+                double det = 0.0;
+                double product = 0.0;
+                for (size_t j = 0; j < (cols); j++) {
+                    det += primaryDiagonalProduct(0,j);
+                }
+                std:: cout << "\nSecondary diagonal Product: ";
+                for(size_t j = 0, i = rows-1; j < (cols); j++) {
+                    det -= secondaryDiagonalProduct(i,j);
+                }
+
+                return det;
+            }
+            else{
+                
             }
         };
             
