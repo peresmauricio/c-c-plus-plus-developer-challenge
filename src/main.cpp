@@ -1,43 +1,54 @@
-
 #include <iostream>
+#include "matrix.h"
+#include "prompt_hmi.h"
 
-enum class OperationType {
-    INVALID = 0,
-    ADDITION = 1,
-    SUBTRACTION,
-    MULTIPLICATION,
-    DIVISION,
-    DETERMINANT
-};
 
-OperationType getOperationChoice() {
-    int choice;
-    std::cout << "Select an operation to perform:" << std::endl;
-    std::cout << "1. Addition" << std::endl;
-    std::cout << "2. Subtraction" << std::endl;
-    std::cout << "3. Multiplication" << std::endl;
-    std::cout << "4. Division" << std::endl;
-    std::cout << "5. Determinant of a matrix" << std::endl;
-    std::cout << "Enter the operation number: ";
-    std::cin >> choice;
+using namespace std;
 
-    switch (choice) {
-        case 1: return OperationType::ADDITION;
-        case 2: return OperationType::SUBTRACTION;
-        case 3: return OperationType::MULTIPLICATION;
-        case 4: return OperationType::DIVISION;
-        case 5: return OperationType::DETERMINANT;
-        default:
-            return OperationType::INVALID;
-            //throw std::invalid_argument("Invalid operation number");
+
+
+void createMatrix() {
+
+    double rows, cols, value;
+    std::cout << "Enter number of rows: ";
+    std::cin >> rows;
+    std::cout << "Enter number of columns: ";
+    std::cin >> cols;
+
+    Matrix mat(rows, cols);
+
+    std::cout << "Matrix created with " << mat.getRows() << " rows and " << mat.getCols() << " columns." << std::endl; 
+
+    //inserir os valores da matriz
+    for(int i = 0; i < mat.getRows(); i++) {
+        for(int j = 0; j < mat.getCols(); j++) {
+            std::cout << "Enter value for position (" << i << ", " << j << "): ";
+            std::cin >> value;
+            mat.setValue(i, j, value);
+        }
     }
+    
+    // Exibir a matriz
+    std::cout << "Matrix entered:" << std::endl;
+    printMatrix(mat);
+
+    //calcular o determinante
+    try {
+        double det = mat.determinant();
+        std::cout << "Determinant: " << det << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "Error calculating determinant: " << e.what() << std::endl;
+    }
+
 }
+
 
 int main() {
 
     OperationType op;
     std::cout << "Artimethical operations Software" << std::endl;
 
+    displayMenu();
     op = getOperationChoice();
 
     switch (op)
@@ -45,11 +56,27 @@ int main() {
     case OperationType::DETERMINANT:
         /* code */
         std::cout << "Calculation of determinant" << std::endl;
+
+        //inserir a ordem da matriz
+        createMatrix();
+
+        break;
+    case OperationType::ADDITION:
+        std::cout << "Addition selected" << std::endl;
+        break;
+    case OperationType::SUBTRACTION:
+        std::cout << "Subtraction selected" << std::endl;
+        break;
+    case OperationType::MULTIPLICATION:
+        std::cout << "Multiplication selected" << std::endl;
+        break;
+    case OperationType::DIVISION:
+        std::cout << "Division selected" << std::endl;
         break;
     case OperationType::INVALID:
         std::cout << "Invalid operation number. Exiting." << std::endl;
         break;
-        default:
+    default:
         std::cout << "Not implemented yet" << std::endl;
         break;
     }   
