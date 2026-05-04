@@ -22,6 +22,7 @@
 
         Matrix operator+(const Matrix& other) const;
         Matrix operator*(const Matrix& other) const;
+        Matrix operator-(const Matrix& other) const;
 
         friend std::ostream& operator<<(std::ostream& os, const Matrix& m);
    

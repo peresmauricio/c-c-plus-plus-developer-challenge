@@ -4,10 +4,10 @@
 
 #include "matrix.h"
 
-class lib_matrix
+class Lib_matrix
 {
 private:        
-    lib_matrix() = delete; // Prevent to instantiate the class.
+    Lib_matrix() = delete; // Prevent to instantiate the class.
 public:
     /** @brief Function to calculate the sum of two matrices. 
      *          The sum only can be calculated if both matrices
@@ -35,6 +35,13 @@ public:
      *  @return The product matrix of a and b.
      */
     static Matrix multiplyMatrix(const Matrix& a, const Matrix& b);
+
+    /**
+     * @brief Function to verify if a matriz is a triangular matrix.
+     * @param a Test matrix.
+     * @return True if matrix is lower or upper triangular matrix.       
+     */
+    static bool isTriangular(const Matrix& a);
 };      
 
 

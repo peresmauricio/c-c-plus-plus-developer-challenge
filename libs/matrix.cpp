@@ -49,6 +49,19 @@ Matrix Matrix::operator+(const Matrix& other) const {
     return result;
 }
 
+Matrix Matrix::operator-(const Matrix& other) const {
+    if (rows != other.rows || cols != other.cols) {
+        throw std::invalid_argument("Incompatible matrix dimensions");
+    }
+    Matrix result(rows, cols);
+    for (size_t i = 0; i < rows; ++i) {
+        for (size_t j = 0; j < cols; ++j) {
+            result.data[i][j] = data[i][j] - other.data[i][j];
+        }
+    }
+    return result;
+}
+
 Matrix Matrix::operator*(const Matrix& other) const {
     if (cols != other.rows) {
         throw std::invalid_argument("Incompatible matrix dimensions for multiplication");
@@ -64,6 +77,7 @@ Matrix Matrix::operator*(const Matrix& other) const {
     return result;
 }
 
+// Function to print the matrix in a readable format.
 std::ostream& operator<<(std::ostream& os, const Matrix& m) {
     for (size_t i = 0; i < m.rows; ++i) {
         for (size_t j = 0; j < m.cols; ++j) {
