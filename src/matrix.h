@@ -146,11 +146,54 @@
                 // Regra de Sarrus for 3x3 matrices.
                 // primary diaonal product  
                 double det = 0.0;
-                double product = 0.0;
+                
                 for (size_t j = 0; j < (cols); j++) {
                     det += primaryDiagonalProduct(0,j);
                 }
-                std:: cout << "\nSecondary diagonal Product: ";
+                for(size_t j = 0, i = rows-1; j < (cols); j++) {
+                    det -= secondaryDiagonalProduct(i,j);
+                }
+
+                return det;
+            }else{
+                return determinantLaplaceExpansion();
+            }
+            
+        }
+
+        double determinantLaplaceExpansion() const {
+            if (!isSquare()) {
+                throw std::invalid_argument("Determinant is only defined for square matrices");
+            }
+            // Check if the matris is a null matrix, if so, the determinant is 0.0
+            if (isNull()) {
+                return 0.0;
+            }
+
+            if(isTriangular()){
+                double det = 1.0;
+                // If is a triangular matrix, the determinant is th product of the main diagonal  
+                for (size_t i = 0; i < rows; i++) {
+                    det *= data[i][i];
+                }
+                return det;
+            }  
+            // if the matrix is 1x1, the determinant is the single value of the matrix.
+            if((rows ==1) && (cols == 1)){
+                return data[0][0];
+            }
+            else if((rows == 2) && (cols == 2)){
+                return data[0][0] * data[1][1] - data[0][1] * data[1][0];
+            } 
+            else if((rows == 3) && (cols == 3))
+            {
+                // Regra de Sarrus for 3x3 matrices.
+                // primary diaonal product  
+                double det = 0.0;
+                
+                for (size_t j = 0; j < (cols); j++) {
+                    det += primaryDiagonalProduct(0,j);
+                }
                 for(size_t j = 0, i = rows-1; j < (cols); j++) {
                     det -= secondaryDiagonalProduct(i,j);
                 }
@@ -158,10 +201,26 @@
                 return det;
             }
             else{
-                
+                double det = 0.0;
+                for (size_t j = 0; j < cols; ++j) {
+                    // Create submatrix for cofactor expansion
+                    std::vector<std::vector<double>> submatrix(rows - 1, std::vector<double>(cols - 1));
+                    // Select the first row and the j-th column to create the submatrix
+                    for (size_t i = 1; i < rows; ++i) {
+                        for (size_t k = 0; k < cols; ++k) {
+                            if (k < j) {
+                                submatrix[i - 1][k] = data[i][k];
+                            } else if (k > j) {
+                                submatrix[i - 1][k - 1] = data[i][k];
+                            }
+                        }
+                    }
+                    // Recursive call for determinant of submatrix
+                    det += (j % 2 == 0 ? 1 : -1) * data[0][j] * Matrix(submatrix).determinantLaplaceExpansion();
+                }
+                return det;
             }
-        };
-            
+        }     
     };
 
 #endif // MATRIX_H
