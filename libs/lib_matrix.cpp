@@ -32,3 +32,15 @@ bool Lib_matrix::isTriangular(const Matrix& a) {
     return upper || lower;
 }
 
+// Check if the matrix is a null matrix.
+bool Lib_matrix::isNull(const Matrix& a) {
+    for (size_t i = 0; i < a.getRows(); ++i) {
+        for (size_t j = 0; j < a.getCols(); ++j) {
+            if (a.getValue(i,j) != 0.0) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+

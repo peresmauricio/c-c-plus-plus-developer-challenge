@@ -42,6 +42,14 @@ public:
      * @return True if matrix is lower or upper triangular matrix.       
      */
     static bool isTriangular(const Matrix& a);
+
+    /**
+     * @brief Function to check if the matriz is a null matrix
+     * @param a Matrix to test.
+     * @param True if the passed matrix is a null matrix, otherwise 
+     *        False. 
+     */
+    static bool isNull(const Matrix& a);
 };      
 
 

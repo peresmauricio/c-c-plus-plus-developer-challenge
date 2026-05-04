@@ -52,3 +52,24 @@ TEST(LibMatrixTest, triangular_matrix_check)
 
     EXPECT_EQ(true, Lib_matrix::isTriangular(a));
 }
+
+/// @brief Verify the integrit of isNull function.
+TEST(LibMatrixTest, null_matrix_false_check)
+{
+    Matrix a(2,2);
+    a.at(0, 0) = 1; a.at(0, 1) = 0;
+    a.at(1, 0) = 0; a.at(1, 1) = 0;
+
+    EXPECT_EQ(false, Lib_matrix::isNull(a));
+}
+
+/// @brief Verify the integrit of isNull function.
+TEST(LibMatrixTest, null_matrix_true_check)
+{
+    Matrix a(2,2);
+    
+    a.at(0, 0) = 0; a.at(0, 1) = 0;
+    a.at(1, 0) = 0; a.at(1, 1) = 0;
+
+    EXPECT_EQ(true, Lib_matrix::isNull(a));
+}
