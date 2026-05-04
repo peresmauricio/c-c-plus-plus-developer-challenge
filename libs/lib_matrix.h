@@ -8,6 +8,7 @@ class Lib_matrix
 {
 private:        
     Lib_matrix() = delete; // Prevent to instantiate the class.
+
 public:
     /** @brief Function to calculate the sum of two matrices. 
      *          The sum only can be calculated if both matrices
@@ -50,6 +51,26 @@ public:
      *        False. 
      */
     static bool isNull(const Matrix& a);
+
+    /**
+     * @brief Function to calcule the product of a primary diagonal from a pivot 
+     *        cordinate. 
+     * @param a Matrix to calculate diagonal product.
+     * @param pivotRow Index of pivot line.
+     * @param pivotCol Index of pivot column.
+     * @return Product of diagonal elements started in pivot point.
+    */
+    static double primaryDiagonalProduct(const Matrix& a, size_t pivotRow, size_t pivotCol);
+
+    /**
+     * @brief Function to calcule the product of a secundary diagonal from a pivot 
+     *        cordinate. 
+     * @param a Matrix to calculate diagonal product.
+     * @param pivotRow Index of pivot line.
+     * @param pivotCol Index of pivot column.
+     * @return Product of diagonal elements started in pivot point.
+    */
+    static double secondaryDiagonalProduct(const Matrix& a, size_t pivotRow, size_t pivotCol);
 };      
 
 

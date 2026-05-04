@@ -73,3 +73,35 @@ TEST(LibMatrixTest, null_matrix_true_check)
 
     EXPECT_EQ(true, Lib_matrix::isNull(a));
 }
+
+/// @brief Verify the integrit of primaryDiagonalProduct.
+///        Function used to resolve Sarrus method.
+TEST(LibMatrixTest, primaryDiagonalProduct)
+{
+    Matrix a(4,4);
+
+    a.at(0,0) = 2; a.at(0,1) = 1.2; a.at(0,2) = 10; a.at(0,3) =  0;
+    a.at(1,0) = 1; a.at(1,1) =   4; a.at(1,2) =  1; a.at(1,3) =  3;
+    a.at(2,0) = 5; a.at(2,1) =  18; a.at(2,2) =  4; a.at(2,3) = -5;
+    a.at(3,0) =-2; a.at(3,1) =   2; a.at(3,2) = -1; a.at(3,3) = -3;
+
+    EXPECT_EQ(-96, Lib_matrix::primaryDiagonalProduct(a,0,0));
+    EXPECT_EQ( 300, Lib_matrix::primaryDiagonalProduct(a,0,2));
+    EXPECT_EQ( 0, Lib_matrix::primaryDiagonalProduct(a,0,3));
+}
+
+/// @brief Verify the integrit of primaryDiagonalProduct.
+///        Function used to resolve Sarrus method.
+TEST(LibMatrixTest, secundaryDiagonalProduct)
+{
+    Matrix a(4,4);
+
+    a.at(0,0) = 2; a.at(0,1) = 1.2; a.at(0,2) = 10; a.at(0,3) =  0;
+    a.at(1,0) = 1; a.at(1,1) =   4; a.at(1,2) =  1; a.at(1,3) =  3;
+    a.at(2,0) = 5; a.at(2,1) =  18; a.at(2,2) =  4; a.at(2,3) = -5;
+    a.at(3,0) =-2; a.at(3,1) =   2; a.at(3,2) = -1; a.at(3,3) = -3;
+
+    EXPECT_EQ( 0 , Lib_matrix::secondaryDiagonalProduct(a,3,0));
+    EXPECT_EQ( 48, Lib_matrix::secondaryDiagonalProduct(a,3,1));
+    EXPECT_EQ( -600, Lib_matrix::secondaryDiagonalProduct(a,3,3));
+}
