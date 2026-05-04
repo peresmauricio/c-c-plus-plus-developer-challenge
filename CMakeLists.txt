@@ -9,11 +9,12 @@ file(GLOB PROJECT_SOURCES CONFIGURE_DEPENDS
   "${CMAKE_SOURCE_DIR}/src/*.cc"
   "${CMAKE_SOURCE_DIR}/src/*.cxx"
   "${CMAKE_SOURCE_DIR}/src/*.c"
-  "${CMAKE_SOURCE_DIR}/model/*.cpp"
+  "${CMAKE_SOURCE_DIR}/libs/*.cpp"
 )
 
 file(GLOB PROJECT_HEADERS CONFIGURE_DEPENDS
   "${CMAKE_SOURCE_DIR}/src/*.h"
+  "${CMAKE_SOURCE_DIR}/libs/*.h"
 )
 
 if(NOT PROJECT_SOURCES)

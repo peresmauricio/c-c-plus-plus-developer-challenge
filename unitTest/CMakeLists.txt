@@ -17,6 +17,7 @@ file(GLOB TEST_SOURCES CONFIGURE_DEPENDS
 file(GLOB PROJECT_HEADERS CONFIGURE_DEPENDS
     "${CMAKE_SOURCE_DIR}/*.h"
     "${CMAKE_SOURCE_DIR}/../src/matrix.h"
+    "${CMAKE_SOURCE_DIR}/../libs/lib_matrix.h"
 )
 
 add_executable(mytests
@@ -27,6 +28,7 @@ add_executable(mytests
 target_include_directories(mytests PRIVATE
     ${GOOGLE_TEST_PATH}/googletest/include
     ${CMAKE_SOURCE_DIR}/../src
+    ${CMAKE_SOURCE_DIR}/../libs
 )
 
 target_link_libraries(mytests PRIVATE gtest_main)

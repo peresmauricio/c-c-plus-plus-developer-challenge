@@ -63,9 +63,15 @@ int main() {
         break;
     case OperationType::ADDITION:
         std::cout << "Addition selected" << std::endl;
+
+        // check if matrices have the same order.
+
         break;
     case OperationType::SUBTRACTION:
         std::cout << "Subtraction selected" << std::endl;
+
+        // Check if matrices have the same order.
+        
         break;
     case OperationType::MULTIPLICATION:
         std::cout << "Multiplication selected" << std::endl;
