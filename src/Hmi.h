@@ -12,13 +12,14 @@
  */
 class HMI {
 public:
-    virtual void displayMenu(const Menu& m);
-    virtual int getOperationChoice();
+    HMI() = default;
+    virtual void displayMenu(const Menu& m) = 0;
+    virtual int getOperationChoice() = 0;
     //virtual std::pair<double, double> getSingleValues();
-    virtual std::vector<double> getArrayValues();
-    virtual std::vector<std::vector<double>> getMatrix();
+    virtual std::vector<double> getArrayValues() = 0;
+    virtual std::vector<std::vector<double>> getMatrix() = 0;
     //virtual void displayResult(double result);    
-    virtual ~HMI(){};
+    virtual ~HMI() = default;
 };
 
 

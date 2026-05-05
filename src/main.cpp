@@ -1,6 +1,5 @@
 #include <iostream>
 #include "matrix.h"
-#include "prompt_hmi.h"
 // Applicatons header files
 #include "app_matrix.h"
 #include <spdlog/spdlog.h>

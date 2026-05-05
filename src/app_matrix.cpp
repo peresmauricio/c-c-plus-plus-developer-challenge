@@ -52,7 +52,7 @@ void app_matrix_init() {
     
     int optionSelected = 0;
 
-    HmiCli hmi();   // Start HMI
+    HmiCli hmi;   // Start HMI
 
     // Creating the main menu of operations
     Menu mainMenu("Matrix Operations"); 
@@ -68,7 +68,8 @@ void app_matrix_init() {
         {
             case APP_WAITING_FOR_INPUT:
                 system("clear"); // Clear the console for better readability. 
-                promptHMI.display();
+                hmi.displayMenu(mainMenu);
+                
                 std::cout << "Select an option: ";
                 std::cin >> optionSelected;
                 std::cout << "You selected: " << optionSelected << std::endl;

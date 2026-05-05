@@ -2,7 +2,7 @@
 #include "matrix.h"
 #include "lib_menu.h"
 
-
+    
     void HmiCli::displayMenu(const Menu& m ) {
         
         std::cout << "\n"<< m.getTitle() << "\n" << std::endl;
