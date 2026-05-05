@@ -11,13 +11,16 @@ add_subdirectory(${GOOGLE_TEST_PATH} googletest_build)
 
 file(GLOB TEST_SOURCES CONFIGURE_DEPENDS
     "${CMAKE_SOURCE_DIR}/*.cpp"
-    "${CMAKE_SOURCE_DIR}/../src/matrix.cpp"
+    "${CMAKE_SOURCE_DIR}/../*.cpp"
+    "${CMAKE_SOURCE_DIR}/../src/app_matrix.cpp"
+    "${CMAKE_SOURCE_DIR}/../src/prompt_hmi.cpp"
+    "${CMAKE_SOURCE_DIR}/../libs/*.cpp"
 )
 
 file(GLOB PROJECT_HEADERS CONFIGURE_DEPENDS
     "${CMAKE_SOURCE_DIR}/*.h"
-    "${CMAKE_SOURCE_DIR}/../src/matrix.h"
-    "${CMAKE_SOURCE_DIR}/../libs/lib_matrix.h"
+    "${CMAKE_SOURCE_DIR}/../src/*.h"
+    "${CMAKE_SOURCE_DIR}/../libs/*.h"
 )
 
 add_executable(mytests
