@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(dynamox_challenger)
 
+find_package(spdlog REQUIRED)
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_COMPILER g++)
 
@@ -26,8 +28,8 @@ add_executable(dynamox_challenger ${PROJECT_SOURCES} ${PROJECT_HEADERS})
 target_include_directories(dynamox_challenger
     PRIVATE
         ${CMAKE_SOURCE_DIR}/src
-        ${CMAKE_SOURCE_DIR}/model
+        ${CMAKE_SOURCE_DIR}/libs
 )
 
-target_link_libraries(dynamox_challenger stdc++)
+target_link_libraries(dynamox_challenger PRIVATE stdc++ spdlog::spdlog)
 
