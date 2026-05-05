@@ -105,3 +105,55 @@ TEST(LibMatrixTest, secundaryDiagonalProduct)
     EXPECT_EQ( 48, Lib_matrix::secondaryDiagonalProduct(a,3,1));
     EXPECT_EQ( -600, Lib_matrix::secondaryDiagonalProduct(a,3,3));
 }
+
+/// @brief Verify the integrit of Laplace Method.
+TEST(LibMatrixTest, laplaceExpansionMethod_null_matrix)
+{
+    Matrix a(2,2);
+    
+    a.at(0, 0) = 0; a.at(0, 1) = 0;
+    a.at(1, 0) = 0; a.at(1, 1) = 0;
+
+    EXPECT_EQ( 0, Lib_matrix::determinantLaplaceExpansion(a));
+}
+
+/// @brief Verify the integrit of Laplace Method.
+TEST(LibMatrixTest, laplaceExpansionMethod_upper_triangular_matrix)
+{
+    Matrix a(3,3);
+    
+    a.at(0, 0) = 2; a.at(0, 1) = 3; a.at(0, 2) = 4;
+    a.at(1, 0) = 0; a.at(1, 1) = 4; a.at(1, 2) = 6;
+    a.at(2, 0) = 0; a.at(2, 1) = 0; a.at(2, 2) = 1;
+
+    EXPECT_EQ( 8, Lib_matrix::determinantLaplaceExpansion(a));
+}
+
+/// @brief Verify the integrit of Laplace Method.
+TEST(LibMatrixTest, laplaceExpansionMethod_4_order)
+{
+    Matrix a(4,4);
+
+    a.at(0,0) = 1;  a.at(0,1) = 2;  a.at(0,2) = 3; a.at(0,3) =  4;
+    a.at(1,0) = 5;  a.at(1,1) = 6;  a.at(1,2) = 7; a.at(1,3) =  8;
+    a.at(2,0) = 9;  a.at(2,1) = 10; a.at(2,2) =11; a.at(2,3) = 12;
+    a.at(3,0) =-13; a.at(3,1) = 14; a.at(3,2) =15; a.at(3,3) = 16;
+
+    EXPECT_EQ( 0, Lib_matrix::determinantLaplaceExpansion(a));
+}
+
+/// @brief Verify the integrit of Laplace Method.
+TEST(LibMatrixTest, laplaceExpansionMethod_5_order)
+{
+    Matrix a(5,5);
+
+    a.at(0,0) = 1; a.at(0,1) = 0; a.at(0,2) = 2; a.at(0,3) =-1; a.at(0,4) = 3;
+    a.at(1,0) = 2; a.at(1,1) = 1; a.at(1,2) = 0; a.at(1,3) = 4; a.at(1,4) =-2;
+    a.at(2,0) = 0; a.at(2,1) = 3; a.at(2,2) = 1; a.at(2,3) = 2; a.at(2,4) = 1;
+    a.at(3,0) = 1; a.at(3,1) =-1; a.at(3,2) = 2; a.at(3,3) = 0; a.at(3,4) = 2;
+    a.at(4,0) = 3; a.at(4,1) = 2; a.at(4,2) =-3; a.at(4,3) = 1; a.at(4,4) = 0;
+    
+    //EXPECT_EQ( 0, a.determinantLaplaceExpansion());
+
+    EXPECT_EQ( 84, Lib_matrix::determinantLaplaceExpansion(a));
+}

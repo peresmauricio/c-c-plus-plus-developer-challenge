@@ -71,6 +71,29 @@ public:
      * @return Product of diagonal elements started in pivot point.
     */
     static double secondaryDiagonalProduct(const Matrix& a, size_t pivotRow, size_t pivotCol);
+
+    // Determinant calculation based in Leibniz formule 
+    /**
+     * @brief Function to calculate the determinant of a n x n matrix 
+     * @param a matrix with (n x n) order to calculate the determinat value.
+     * @return Determinant value of matrix a.
+     * */ 
+    static double determinant(const Matrix& a); 
+
+    /**
+     * @brief Function to calculte the determinat of 3 x 3 matrix based on Sarrus Method
+     * @param a Matrix with n x n order to calculate the determinat value.
+     * @return Determinant value of matrix a.
+     */
+    static double determinantSarrusMethod(const Matrix& a); 
+
+    /**
+     * @brief Function to calculate the determinat of n x n greater than order 4. 
+     *        Based in the Laplace Expansion Method.
+     * @param a Matrix to calculate the determinat value.
+     * @return The determinant value of matrix a.
+     */
+    static double determinantLaplaceExpansion(const Matrix& a);
 };      
 
 

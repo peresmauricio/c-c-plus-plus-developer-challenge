@@ -80,3 +80,89 @@ double Lib_matrix::secondaryDiagonalProduct(const Matrix& a, size_t pivotRow, si
 
     return product;
 }
+
+// Determinant calculation based in Leibniz formule  
+double Lib_matrix::determinant(const Matrix& a) {
+    if (!a.isSquare()) {
+        throw std::invalid_argument("Determinant is only defined for square matrices");
+    }
+    // Check if the matris is a null matrix, if so, the determinant is 0.0
+    if (isNull(a)) {
+        return 0.0;
+    }
+
+    if(isTriangular(a)){
+        return primaryDiagonalProduct(a, 0, 0);
+    }  
+
+    if((a.getRows() == 2) && (a.getCols() == 2)){
+        return a.getValue(0,0) * a.getValue(1,1) - a.getValue(0,1) * a.getValue(1,0);
+    } 
+    else if((a.getRows() == 3) && (a.getCols() == 3))
+    {
+        // Regra de Sarrus for 3x3 matrices.
+        return determinantSarrusMethod(a);
+    }
+    else{
+        return determinantLaplaceExpansion(a);
+    }
+}
+
+double Lib_matrix::determinantSarrusMethod(const Matrix& a) {
+    double det = 0.0;
+        
+    for (size_t j = 0; j < (a.getCols()); j++) {
+        det += primaryDiagonalProduct(a,0,j);
+    }
+    for(size_t j = 0, i = a.getRows()-1; j < (a.getCols()); j++) {
+        det -= secondaryDiagonalProduct(a,i,j);
+    }
+    return det;
+}
+
+double Lib_matrix::determinantLaplaceExpansion(const Matrix& a) {
+    if (!a.isSquare()) {
+        throw std::invalid_argument("Determinant is only defined for square matrices");
+    }
+    // Check if the matris is a null matrix, if so, the determinant is 0.0
+    if (isNull(a)) {
+        return 0.0;
+    }
+
+    if(isTriangular(a)){
+        return primaryDiagonalProduct(a, 0, 0);
+    }  
+    // if the matrix is 1x1, the determinant is the single value of the matrix.
+    if((a.getRows() ==1) && (a.getCols() == 1)){
+        return a.getValue(0,0);
+    }
+    else if((a.getRows() == 2) && (a.getCols() == 2)){
+        return a.getValue(0,0) * a.getValue(1,1) - a.getValue(0,1) * a.getValue(1,0);
+    } 
+    else if((a.getRows() == 3) && (a.getCols() == 3))
+    {
+        // Regra de Sarrus for 3x3 matrices.
+        return determinantSarrusMethod(a);
+    }
+    else{
+        double det = 0.0;
+        for (size_t j = 0; j < a.getCols(); ++j) {
+            // Create submatrix for cofactor expansion
+            Matrix submatrix(a.getRows() - 1, a.getCols() - 1);
+            // Select the first row and the j-th column to create the submatrix
+            for (size_t i = 1; i < a.getRows(); ++i) {
+                for (size_t k = 0; k < a.getCols(); ++k) {
+                    if (k < j) {
+                        submatrix.setValue((i - 1),k, a.getValue(i,k));
+                    } else if (k > j) {
+                        submatrix.setValue((i - 1),(k - 1),a.getValue(i,k));
+                    }
+                }
+            }
+            // Recursive call for determinant of submatrix
+            det += (j % 2 == 0 ? 1 : -1) * a.getValue(0,j) * determinantLaplaceExpansion(submatrix); 
+        }
+        return det;
+    }
+}     
+
