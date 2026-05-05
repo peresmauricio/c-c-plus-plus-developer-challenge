@@ -12,7 +12,7 @@ public:
     HmiCli(){};
     ~HmiCli() = default;
     void displayMenu(const Menu& m ) override;
-    int getOperationChoice() override;
+    int getUserChoice(std::string msg) override;
     //std::pair<double, double> getSingleValues() override;
     std::vector<double> getArrayValues() override;
     std::vector<std::vector<double>> getMatrix() override;

@@ -14,7 +14,7 @@ class HMI {
 public:
     HMI() = default;
     virtual void displayMenu(const Menu& m) = 0;
-    virtual int getOperationChoice() = 0;
+    virtual int getUserChoice(std::string msg) = 0;
     //virtual std::pair<double, double> getSingleValues();
     virtual std::vector<double> getArrayValues() = 0;
     virtual std::vector<std::vector<double>> getMatrix() = 0;

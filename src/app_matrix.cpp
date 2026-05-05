@@ -69,10 +69,8 @@ void app_matrix_init() {
             case APP_WAITING_FOR_INPUT:
                 system("clear"); // Clear the console for better readability. 
                 hmi.displayMenu(mainMenu);
-                
-                std::cout << "Select an option: ";
-                std::cin >> optionSelected;
-                std::cout << "You selected: " << optionSelected << std::endl;
+                optionSelected = hmi.getUserChoice("Select an option: ");
+
                 if(optionSelected >= MatrixOptions::MAX_OPTIONS) {
                     gucCtrMachine = APP_INVALID_INPUT;
                 }

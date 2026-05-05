@@ -10,9 +10,11 @@
             std::cout << item.getId() << " - " << item.getName() << std::endl;
         }
     }
-    int HmiCli::getOperationChoice() {
+    int HmiCli::getUserChoice(std::string msg){
         int choice;
+        std::cout << msg; 
         std::cin >> choice;
+        std::cout << "Choice Operation: " << choice;
         return choice;
     }
     //std::pair<double, double> HmiCli::getSingleValues() {
