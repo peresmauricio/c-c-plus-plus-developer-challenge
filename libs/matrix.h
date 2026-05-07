@@ -10,9 +10,14 @@
         size_t rows, cols;
 
     public:
+        Matrix(){}
         Matrix(size_t r, size_t c);
         Matrix(const std::vector<std::vector<double>>& d);
-        ~Matrix();
+
+        // copy constructor
+        Matrix(const Matrix&) = default; 
+
+        ~Matrix() = default;
 
         size_t getRows() const;
         size_t getCols() const;
@@ -28,24 +33,16 @@
    
         void setValue(size_t row, size_t col, double value);
         double getValue(size_t row, size_t col) const;
+        /**
+         * @brief Function to get data vetor of matrix.
+         * @return std::vector<std::vector<double>> data vector.
+         */
+        std::vector<std::vector<double>> getData() const;
+
         // Check if the matrix is square.
         bool isSquare() const {
             return rows == cols;
-        }
-/*
-        // Only apply Gaussian if the pivot value is differente of zero, otherwise, the determinant is zero.
-        double aplayGaussElimination(size_t pivotRow, size_t pivotCol) {
-            double pivotValue = data[pivotRow][pivotCol];
-            
-            for (size_t i = pivotRow + 1; i < rows; ++i) {
-                double factor = data[i][pivotCol] / pivotValue;
-                for (size_t j = pivotCol; j < cols; ++j) {
-                    data[i][j] -= factor * data[pivotRow][j];
-                }
-            }
-            return pivotValue;
-        }   
-*/            
+        }         
     };
 
 #endif // MATRIX_H

@@ -12,8 +12,6 @@ Matrix::Matrix(const std::vector<std::vector<double>>& d) : data(d) {
     cols = rows > 0 ? d[0].size() : 0;
 }
 
-Matrix::~Matrix() = default;
-
 size_t Matrix::getRows() const {
     return rows;
 }
@@ -102,7 +100,9 @@ double Matrix::getValue(size_t row, size_t col) const {
     return data[row][col];
 }
 
-
+std::vector<std::vector<double>> Matrix::getData() const {
+    return data;
+}
 
 
 
