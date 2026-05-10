@@ -1,5 +1,5 @@
 #include <iostream>
-#include "app_matrix.h"
+#include "app_matrix.hpp"
 #include "app_logger.hpp"
 #include <spdlog/spdlog.h>
 

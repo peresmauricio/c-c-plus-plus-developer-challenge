@@ -1,5 +1,5 @@
 
-#include "app_matrix.h"
+#include "app_matrix.hpp"
 #include "app_hmi.hpp"
 #include "matrix.h"
 #include "lib_matrix.h"

@@ -13,7 +13,7 @@
 #include "parser.h"
 #include "tree_expression.h"
 #include "app_progs.hpp"
-#include "app_matrix.h"
+#include "app_matrix.hpp"
 #include <utility>
 #include <string>
 
