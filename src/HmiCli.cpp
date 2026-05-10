@@ -1,14 +1,48 @@
 #include "HmiCli.h"
 #include "matrix.h"
+#include <thread>
+#include <iostream>
 #include "lib_menu.h"
 
-    
+/*
+
+int main() {
+    int linha = 10, coluna = 20;
+    std::cout << "\x1b[" << linha << ";" << coluna << "H" << "Oi aqui!";
+    std::cout.flush(); // importante para aparecer imediatamente
+}
+
+#include <iostream>
+
+int main() {
+    std::cout << "\x1b[2J";      // limpa a tela
+    std::cout << "\x1b[H";       // vai pro home
+    std::cout << "\x1b[5;10H" << "Texto na linha 5, coluna 10";
+    std::cout.flush();
+}
+
+
+*/    
+
+
     void HmiCli::displayMenu(const Menu& m ) {
         
-        std::cout << "\n"<< m.getTitle() << "\n" << std::endl;
+        std::string line(20, '-');
+        std::string header_msg;
+        
+        // construct the menu header
+        header_msg += "--" + line + "--\n";
+        header_msg += "- " + m.getTitle() + " -\n";
+        header_msg += "--" + line + "--\n";
+
+        system("clear"); // Clear the console for better readability. 
+        std::cout << header_msg << std::endl;
+        //std::cout << "\n"<< m.getTitle() << "\n" << std::endl;
         for (const auto& item : m.getItems()) {
-            std::cout << item.get_ind() << " - " << item.getName() << std::endl;
+            std::cout << "- " << item.get_ind() << ".  " << item.getName() << std::endl;
         }
+        std::cout << "--" << line << "--\n";
+
     }
 
     std::string HmiCli::getUserChoice(std::string msg)
@@ -59,6 +93,19 @@
             }
             std::cout << " |" << std::endl;
         }
+    }
+
+    void HmiCli::show_message(std::string psMsg, int piTime_sec )
+    {
+        std::string line(psMsg.size(), '-');
+        std::string popup_msg;
+        
+        popup_msg += "--" + line + "--\n";
+        popup_msg += "- " + psMsg + " -\n";
+        popup_msg += "--" + line + "--\n";
+
+        std::cout << popup_msg << std::endl;
+        std::this_thread::sleep_for(std::chrono::seconds(piTime_sec));
     }
 
     
