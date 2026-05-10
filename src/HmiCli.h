@@ -5,17 +5,44 @@
 #include "lib_menu.h"
 #include "hmi.h"
 
-
+/**
+ * @brief Abstraction of a Cli interface.
+ */
 class HmiCli : public HMI {
 public:
-    
+    /**
+     * @brief Class Constructor.
+     */
     HmiCli(){};
+    /**
+     * @brief Class Destructor.
+     */
     ~HmiCli() = default;
+    /**
+     * @brief Method to show the system menu in the terminal.
+     * @param m Reference to the menu object. 
+     */
     void displayMenu(const Menu& m ) override;
-    //int getUserChoice(std::string msg) override;
+    /**
+     * @brief Method to wait the user input choice.
+     * @param msg Message to be showed to the user before wait the user answer.
+     * @return String Value of user response chain captured from terminal input.
+     */
     std::string getUserChoice(std::string msg);
+    /**
+     * @brief Method to request from the user a array of values to fill a array.
+     * @return Vector of data inserted in the terminal. 
+     */
     std::vector<double> getArrayValues() override;
+    /**
+     * @brief Method to request a matrix data from user. 
+     * @return A vector of data in bidimension size.
+     */
     std::vector<std::vector<double>> getMatrix() override;
+    /**
+     * @brief Method to show a grafic matrix to the user.
+     * @param A bidimension vector with data.
+     */
     void showMatrix(std::vector<std::vector<double>> matrix) override;
     /**
      * @brief Method to show a info user popup message.

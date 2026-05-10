@@ -219,17 +219,7 @@ void app_hmi_control()
                 {
                     gucHmi_ctr_machine = HMI_CTR_INVALID_INPUT;
                 }
-/*
-                if(optionSelected >= MatrixOptions::MAX_OPTIONS) {
-                    gucHmi_ctr_machine = APP_INVALID_INPUT;
-                }
-                else if(optionSelected == MatrixOptions::EXIT){
-                    gucHmi_ctr_machine = APP_FINALIZANDO;
-                }
-                else {
-                    gucHmi_ctr_machine = APP_PROCESSING;
-                }
-*/
+
                 break;    
             case HMI_CTR_PROCESS_REQUEST:
             {

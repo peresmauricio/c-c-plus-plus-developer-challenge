@@ -10,7 +10,10 @@
 using json = nlohmann::json;
 
 /**
- * @brief Function to initialize progs of the system.
+ * @brief Function to initialize progs of the system. Should be call in the started of the system.
+ * @details In it's first execution creates the database directory and file persistence with the 
+ * minimal data to the application. After that, every initialization, it's responsable to load
+ * data in the Ram memory to execute the system.  
  */
 void app_progs_init(void);
 

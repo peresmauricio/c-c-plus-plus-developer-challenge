@@ -8,9 +8,9 @@ using namespace std;
 
 
 int main() {
-
+    // Initialization of the system. 
     app_logger_init();
-    
+    // Initialization of application
     app_matrix_init();
 
     return 0;

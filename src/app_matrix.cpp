@@ -106,9 +106,6 @@ void getMatrizData(exprlib::Node* node) {
     getMatrizData(node->right.get());
 }
 
-
-
-
 void app_matrix_init() {
     
     int optionSelected = 0;
@@ -118,7 +115,6 @@ void app_matrix_init() {
     app_hmi_init();
 
     app_hmi_control();
-    
 }
 
 /*

@@ -13,7 +13,8 @@
 
 /**
  * @brief Initializes the matrix application.
- * 
+ * @details Initialize modules and database requered to the 
+ * application.
  */
 void app_matrix_init();
 

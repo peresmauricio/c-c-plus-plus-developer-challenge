@@ -10,7 +10,9 @@
 void app_hmi_init();
 
 /**
- * @brief f
+ * @brief Function to control the hmi interface.
+ * @details This application control the menu flow and the
+ * execution of menu choices selected by user. 
  */
 void app_hmi_control();
 
