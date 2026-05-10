@@ -6,7 +6,10 @@
 
 using namespace std;
 
-
+/**
+ * @brief Main function of the project
+ * @details Start the modules used and application.
+ */
 int main() {
     // Initialization of the system. 
     app_logger_init();
