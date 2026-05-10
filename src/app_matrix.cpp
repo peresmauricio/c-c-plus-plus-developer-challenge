@@ -1,18 +1,20 @@
 
 #include "app_matrix.h"
+#include "app_hmi.hpp"
 #include "matrix.h"
 #include "lib_matrix.h"
 #include "lib_menu.h"
 #include "HmiCli.h"
 #include <cstdlib>
 #include <thread>
+#include <iostream>
 #include "symbol.h"
 #include "string.h"
 #include <sstream>
 #include "parser.h"
 #include "tree_expression.h"
 #include "app_progs.hpp"
-#include "app_menu.hpp"
+
 
 /// Local definitions  -------------------------------
 
@@ -45,12 +47,6 @@ static HmiCli gHmi;   // Create a interface
 /// Local Functions -----------------------------------
 
 /**
- * @brief Function to process a equation and show the respectively value.
- * @param equation A list of equation simbols.
- */
-void matrix_perform_operation(const std::string expression);
-
-/**
  * @brief Function to request all data of each element of equation.
  * @param node Pointer to the symbol node tree with all operations and values.
  *             Values means matricies in this app.
@@ -61,7 +57,7 @@ void getMatrizData(exprlib::Node* node);
 /// Implementation -----------------------------------------
 
 
-void matrix_perform_operation(const std::string expression)
+void app_matrix_perform_operation(const std::string expression)
 {
     exprlib::NodePtr node;
     std::ostringstream oss;
@@ -77,6 +73,20 @@ void matrix_perform_operation(const std::string expression)
 
     gHmi.showMatrix( (exprlib::perform_tree_expression(node.get())).getData());
 } 
+
+void app_matrix_perform_determinant(){
+
+    double det_result;
+
+    // Request data matrix.
+    Matrix dataMatrix(gHmi.getMatrix());
+    
+    det_result = Lib_matrix::determinant(dataMatrix);
+
+    gHmi.showMatrix(dataMatrix.getData());
+    
+    std::cout << "Determinante = " << det_result << std::endl;
+}
 
 void getMatrizData(exprlib::Node* node) {
     if (!node) return;
@@ -105,84 +115,10 @@ void app_matrix_init() {
 
     app_progs_init();
 
-    app_menu_init();
+    app_hmi_init();
 
-    app_menu_control();
-    //testar show menu
-
-    return;
-
-    do{
-        std::string equation;  // store the operation expression to execute.  
-        
-        switch(gucCtrMachine)
-        {
-            case APP_WAITING_FOR_INPUT:
-                system("clear"); // Clear the console for better readability. 
-//                gHmi.displayMenu(mainMenu);
-                
-//                optionSelected = gHmi.getUserChoice("Select an option: ");
-
-                if(optionSelected >= MatrixOptions::MAX_OPTIONS) {
-                    gucCtrMachine = APP_INVALID_INPUT;
-                }
-                else if(optionSelected == MatrixOptions::EXIT){
-                    gucCtrMachine = APP_FINALIZANDO;
-                }
-                else {
-                    gucCtrMachine = APP_PROCESSING;
-                }
-
-                break;
-            case APP_INVALID_INPUT:
-                std::cout << "\nInvalid input. Please try again." << std::endl;
-                std::this_thread::sleep_for(std::chrono::seconds(1));
-                gucCtrMachine = APP_WAITING_FOR_INPUT;
-                break;
-            case APP_PROCESSING:{   
-                std::cout << "Request to Execution Option." << std::endl;
-  
-                switch (optionSelected)
-                {
-                case MatrixOptions::DETERMINANT:
-                    
-                    std::cout << "Calculation of determinant" << std::endl;
-                    equation = "det A";                                                                                                    
-
-                    break;
-                case MatrixOptions::ADDITION:
-                    std::cout << "Addition selected" << std::endl;
-                    equation = "A + B"; //"";
-                    break;
-                case MatrixOptions::SUBTRACTION:
-                    std::cout << "Subtraction selected" << std::endl;
-                    equation = "A - B";
-                    break;
-                case MatrixOptions::MULTIPLICATION:
-                    std::cout << "Multiplication selected" << std::endl;
-                    equation = "A * B";
-                    break;
-                default:
-                    std::cout << "Not implemented yet"; 
-                    break;
-                }   
-                // Execute the operation.
-                matrix_perform_operation(equation);
-                
-                std::this_thread::sleep_for(std::chrono::seconds(5));
-
-                gucCtrMachine = APP_WAITING_FOR_INPUT;
-                break;   
-            }        
-            case APP_FINALIZANDO:
-                std::cout << "App Finalizando" << std::endl;
-                break;
-        }
-
-
-        
-    } while (optionSelected != MatrixOptions::EXIT);
-
+    app_hmi_control();
+    
 }
 
 /*

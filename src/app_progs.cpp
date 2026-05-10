@@ -6,6 +6,7 @@
 #include <spdlog/spdlog.h>
 #include "config_app.hpp"
 #include "config_app_logger.hpp"
+#include "lib_menu.h"
 
 using json = nlohmann::json;
 
@@ -56,8 +57,9 @@ void app_progs_init(void)
             drv_save_data_base(DATA_PATH, gData);
         }     
     }
-    catch (const std::exception& e) {
+    catch (const json::parse_error& e) {
         std::cout << "Error: " << e.what() << std::endl;
+        // Todo enviar para o log
     }
 }
 
@@ -91,6 +93,36 @@ json app_progs_get_itens_of_menu(const int pmenu_inded)
     return list;
 }
 
+std::string app_progs_get_menu_item_name(int piId_register){
+
+    try{
+        for(const auto& item : gData){
+            if(item.value("id", -1) == piId_register){
+                return item.at("op").get<std::string>();
+            }
+        }
+    }catch (const json::parse_error& e) {
+        std::cout << "Error: " << e.what() << std::endl;
+        // Todo enviar para o log
+    }
+    return "";
+}
+
+std::string app_progs_get_expression(int piId_register){
+    try{
+        for(const auto& item : gData){
+            if(item.value("id", -1) == piId_register){
+                return item.at("expression").get<std::string>();
+            }
+        }
+    }catch (const json::parse_error& e) {
+        std::cout << "Error: " << e.what() << std::endl;
+        // Todo enviar para o log
+    }
+    return "";
+}
+
+
 void insert_menu_item(int id, const std::string& name, const std::string& expression)
 {
     //check the base of menu to identify the local of menu
@@ -120,12 +152,12 @@ void insert_defaul_menu(json& pdata_base){
     pdata_base.push_back({{"id", 0},{"id_m", 0},{"id_mx", 0},{"ind", 0},{"op", "Matrix Menu"},        {"exp", " "}});
     // Insert itens
     pdata_base.push_back({{"id", 1},{"id_m", 0},{"id_mx", 1},{"ind", 1},{"op", "Operations"},         {"exp", " "}});
-    pdata_base.push_back({{"id", 2},{"id_m", 0},{"id_mx", 0},{"ind", 2},{"op", "Add New Expression"}, {"exp", " "}});
+    pdata_base.push_back({{"id", 2},{"id_m", 0},{"id_mx", 0},{"ind", 2},{"op", "New Expression"},     {"exp", " "}});
     pdata_base.push_back({{"id", 3},{"id_m", 0},{"id_mx", 0},{"ind", 3},{"op", "Remove Expression"},  {"exp", " "}});
     pdata_base.push_back({{"id", 4},{"id_m", 0},{"id_mx", 0},{"ind", 4},{"op", "Exit"},               {"exp", " "}});
     // Operation Menu
     // Main menu ind = 0 - Title
-    pdata_base.push_back({{"id", 5},{"id_m", 1},{"id_mx", 0},{"ind", 0},{"op", "Operation Menu"}, {"exp", " "}});
+    pdata_base.push_back({{"id", 5},{"id_m", 1},{"id_mx", 0},{"ind", 0},{"op", "Operations Menu"}, {"exp", " "}});
     // Insert itens
     pdata_base.push_back({{"id", 6},{"id_m", 1},{"id_mx", 0},{"ind", 1},{"op", "Back"},           {"expression", " "}});
     pdata_base.push_back({{"id", 7},{"id_m", 1},{"id_mx", 1},{"ind", 2},{"op", "Addition"},       {"expression", "A + B"}});

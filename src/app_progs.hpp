@@ -30,5 +30,18 @@ int app_progs_get_number_of_menus();
  */
 json app_progs_get_itens_of_menu(const int pmenu_index);
 
+/**
+ * @brief Function to read the name of item.
+ * @param piId_register -  register Id of tuple of database.
+ * @return name string of item.
+ */
+std::string app_progs_get_menu_item_name(int piId_register);
+
+/**
+ * @brief Function to read the expression of operation item.
+ * @param piId_register Id of the operation register.
+ * @return String of expression associated with item.
+ */
+std::string app_progs_get_expression(int piId_register);
 
 #endif // PROGS_H_INCLUDED
