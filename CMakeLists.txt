@@ -12,6 +12,7 @@ file(GLOB PROJECT_SOURCES CONFIGURE_DEPENDS
   "${CMAKE_SOURCE_DIR}/src/*.cc"
   "${CMAKE_SOURCE_DIR}/src/*.cxx"
   "${CMAKE_SOURCE_DIR}/src/*.c"
+  "${CMAKE_SOURCE_DIR}/drv/*.cpp"
   "${CMAKE_SOURCE_DIR}/libs/*.cpp"
   "${CMAKE_SOURCE_DIR}/libs/lib_expression/*.cpp"
   "${CMAKE_SOURCE_DIR}/libs/lib_menu/*.cpp"
@@ -20,10 +21,14 @@ file(GLOB PROJECT_SOURCES CONFIGURE_DEPENDS
 
 file(GLOB PROJECT_HEADERS CONFIGURE_DEPENDS
   "${CMAKE_SOURCE_DIR}/src/*.h"
+  "${CMAKE_SOURCE_DIR}/src/*.hpp"
+  "${CMAKE_SOURCE_DIR}/drv/*.hpp"
+  "${CMAKE_SOURCE_DIR}/config/*.hpp"
   "${CMAKE_SOURCE_DIR}/libs/*.h"
   "${CMAKE_SOURCE_DIR}/libs/lib_expression/*.h"
   "${CMAKE_SOURCE_DIR}/libs/lib_menu/*.h"
   "${CMAKE_SOURCE_DIR}/libs/lib_hmi/*.h"
+  ${CMAKE_SOURCE_DIR}/libs/nlohmann/*.hpp
 )
 
 if(NOT PROJECT_SOURCES)
@@ -35,10 +40,13 @@ add_executable(dynamox_challenger ${PROJECT_SOURCES} ${PROJECT_HEADERS})
 target_include_directories(dynamox_challenger
     PRIVATE
         ${CMAKE_SOURCE_DIR}/src
+        ${CMAKE_SOURCE_DIR}/drv
+        ${CMAKE_SOURCE_DIR}/config
         ${CMAKE_SOURCE_DIR}/libs
         ${CMAKE_SOURCE_DIR}/libs/lib_expression
         ${CMAKE_SOURCE_DIR}/libs/lib_menu
         ${CMAKE_SOURCE_DIR}/libs/lib_hmi
+        ${CMAKE_SOURCE_DIR}/libs/nlohmann
 )
 
 target_link_libraries(dynamox_challenger PRIVATE stdc++ spdlog::spdlog)
