@@ -11,6 +11,8 @@
 #include <sstream>
 #include "parser.h"
 #include "tree_expression.h"
+#include "app_progs.hpp"
+#include "app_menu.hpp"
 
 /// Local definitions  -------------------------------
 
@@ -94,18 +96,21 @@ void getMatrizData(exprlib::Node* node) {
     getMatrizData(node->right.get());
 }
 
+
+
+
 void app_matrix_init() {
     
     int optionSelected = 0;
 
-    // Creating the main menu of operations
-    Menu mainMenu("Matrix Operations"); 
-    
-    mainMenu.addItem(MenuItem("Addition", MatrixOptions::ADDITION));
-    mainMenu.addItem(MenuItem("Subtraction", MatrixOptions::SUBTRACTION));
-    mainMenu.addItem(MenuItem("Multiplication", MatrixOptions::MULTIPLICATION));
-    mainMenu.addItem(MenuItem("Determinant", MatrixOptions::DETERMINANT));
-    mainMenu.addItem(MenuItem("Exit", MatrixOptions::EXIT));
+    app_progs_init();
+
+    app_menu_init();
+
+    app_menu_control();
+    //testar show menu
+
+    return;
 
     do{
         std::string equation;  // store the operation expression to execute.  
@@ -114,9 +119,9 @@ void app_matrix_init() {
         {
             case APP_WAITING_FOR_INPUT:
                 system("clear"); // Clear the console for better readability. 
-                gHmi.displayMenu(mainMenu);
+//                gHmi.displayMenu(mainMenu);
                 
-                optionSelected = gHmi.getUserChoice("Select an option: ");
+//                optionSelected = gHmi.getUserChoice("Select an option: ");
 
                 if(optionSelected >= MatrixOptions::MAX_OPTIONS) {
                     gucCtrMachine = APP_INVALID_INPUT;

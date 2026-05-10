@@ -7,15 +7,16 @@
         
         std::cout << "\n"<< m.getTitle() << "\n" << std::endl;
         for (const auto& item : m.getItems()) {
-            std::cout << item.getId() << " - " << item.getName() << std::endl;
+            std::cout << item.get_ind() << " - " << item.getName() << std::endl;
         }
     }
 
-    int HmiCli::getUserChoice(std::string msg){
-        int choice;
+    std::string HmiCli::getUserChoice(std::string msg)
+    {
+        std::string choice;
         std::cout << msg; 
         std::cin >> choice;
-        std::cout << "Choice Operation: " << choice;
+        std::cout << "Choiced Operation: " << choice;
         return choice;
     }
 

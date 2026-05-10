@@ -12,7 +12,8 @@ public:
     HmiCli(){};
     ~HmiCli() = default;
     void displayMenu(const Menu& m ) override;
-    int getUserChoice(std::string msg) override;
+    //int getUserChoice(std::string msg) override;
+    std::string getUserChoice(std::string msg);
     std::vector<double> getArrayValues() override;
     std::vector<std::vector<double>> getMatrix() override;
     void showMatrix(std::vector<std::vector<double>> matrix) override;

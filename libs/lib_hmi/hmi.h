@@ -23,9 +23,9 @@ public:
     /**
      * @brief Method to read a menu item choice by user.
      * @param msg String message to show before wait user answer.
-     * @return int ID index value of choice item.
+     * @return string of ID option value of item choiced.
      */
-    virtual int getUserChoice(std::string msg) = 0;
+    virtual std::string getUserChoice(std::string msg) = 0;
     /**
      * @brief Method to request input from the user of data array values.
      * @return std::vector<double> Vector of double values.
