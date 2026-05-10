@@ -28,7 +28,7 @@ file(GLOB PROJECT_HEADERS CONFIGURE_DEPENDS
   "${CMAKE_SOURCE_DIR}/libs/lib_expression/*.h"
   "${CMAKE_SOURCE_DIR}/libs/lib_menu/*.h"
   "${CMAKE_SOURCE_DIR}/libs/lib_hmi/*.h"
-  "${CMAKE_SOURCE_DIR}/libs/json/include/*.hpp"
+  "${CMAKE_SOURCE_DIR}/libs/json/include/nlohmann/*.hpp"
 )
 
 if(NOT PROJECT_SOURCES)
@@ -37,17 +37,18 @@ endif()
 
 add_executable(dynamox_challenger ${PROJECT_SOURCES} ${PROJECT_HEADERS})
 
-target_include_directories(dynamox_challenger
-    PRIVATE
-        ${CMAKE_SOURCE_DIR}/src
-        ${CMAKE_SOURCE_DIR}/drv
-        ${CMAKE_SOURCE_DIR}/config
-        ${CMAKE_SOURCE_DIR}/libs
-        ${CMAKE_SOURCE_DIR}/libs/lib_expression
-        ${CMAKE_SOURCE_DIR}/libs/lib_menu
-        ${CMAKE_SOURCE_DIR}/libs/lib_hmi
-        ${CMAKE_SOURCE_DIR}/libs/json/
+set(HEADERS_INCLUD_DIRS 
+  ${CMAKE_SOURCE_DIR}/src
+  ${CMAKE_SOURCE_DIR}/drv
+  ${CMAKE_SOURCE_DIR}/config
+  ${CMAKE_SOURCE_DIR}/libs
+  ${CMAKE_SOURCE_DIR}/libs/lib_expression
+  ${CMAKE_SOURCE_DIR}/libs/lib_menu
+  ${CMAKE_SOURCE_DIR}/libs/lib_hmi
+  ${CMAKE_SOURCE_DIR}/libs/json/include/ 
 )
+
+target_include_directories(dynamox_challenger PRIVATE ${HEADERS_INCLUD_DIRS})
 
 target_link_libraries(dynamox_challenger PRIVATE stdc++ spdlog::spdlog)
 
