@@ -28,7 +28,7 @@ file(GLOB PROJECT_HEADERS CONFIGURE_DEPENDS
   "${CMAKE_SOURCE_DIR}/libs/lib_expression/*.h"
   "${CMAKE_SOURCE_DIR}/libs/lib_menu/*.h"
   "${CMAKE_SOURCE_DIR}/libs/lib_hmi/*.h"
-  ${CMAKE_SOURCE_DIR}/libs/nlohmann/*.hpp
+  "${CMAKE_SOURCE_DIR}/libs/json/include/*.hpp"
 )
 
 if(NOT PROJECT_SOURCES)
@@ -46,7 +46,7 @@ target_include_directories(dynamox_challenger
         ${CMAKE_SOURCE_DIR}/libs/lib_expression
         ${CMAKE_SOURCE_DIR}/libs/lib_menu
         ${CMAKE_SOURCE_DIR}/libs/lib_hmi
-        ${CMAKE_SOURCE_DIR}/libs/nlohmann
+        ${CMAKE_SOURCE_DIR}/libs/json/
 )
 
 target_link_libraries(dynamox_challenger PRIVATE stdc++ spdlog::spdlog)
