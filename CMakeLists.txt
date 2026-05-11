@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
-project(dynamox_challenger)
+project(dynamox_challenger LANGUAGES CXX)
 
 find_package(spdlog REQUIRED)
 
 # Set version of C++
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_COMPILER g++)
+
 
 file(GLOB PROJECT_SOURCES CONFIGURE_DEPENDS
   "${CMAKE_SOURCE_DIR}/src/*.cpp"
@@ -35,7 +35,7 @@ if(NOT PROJECT_SOURCES)
   message(FATAL_ERROR "No source files found for target dynamox_challenger")
 endif()
 
-add_executable(dynamox_challenger ${PROJECT_SOURCES} ${PROJECT_HEADERS})
+add_executable(dynamox_challenger ${PROJECT_SOURCES})
 
 set(HEADERS_INCLUD_DIRS 
   ${CMAKE_SOURCE_DIR}/src
