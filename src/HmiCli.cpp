@@ -82,15 +82,12 @@ int main() {
         return values;
     }
 
-    std::vector<std::vector<double>> HmiCli::getMatrix(){
-        int n;
-        std::cout << "Enter matrix order: ";
-        std::cin >> n;
+    std::vector<std::vector<double>> HmiCli::getMatrix(const int order){
         std::cout << std::endl;
-        std::vector<std::vector<double>> matrix(n, std::vector<double>(n));
-        for (int i = 0; i < n; ++i) {
+        std::vector<std::vector<double>> matrix(order, std::vector<double>(order));
+        for (int i = 0; i < order; ++i) {
             std::cout << "Enter row " << (i + 1) << ": ";
-            for (int j = 0; j < n; ++j) {
+            for (int j = 0; j < order; ++j) {
                 std::cin >> matrix[i][j];
             }
         }

@@ -54,7 +54,7 @@ static HmiCli gHmi;   // Create a interface
  * @param node Pointer to the symbol node tree with all operations and values.
  *             Values means matricies in this app.
  */
-void getMatrizData(exprlib::Node* node);
+void getMatrizData(exprlib::Node* node, const int order);
 
 
 /// Implementation -----------------------------------------
@@ -64,6 +64,7 @@ void app_matrix_perform_operation(const std::string expression)
 {
     exprlib::NodePtr node;
     std::ostringstream oss;
+    std::string order;
 
     // create the tree of tokens.
     node = exprlib::Parser::parseInfix(expression);
@@ -72,7 +73,9 @@ void app_matrix_perform_operation(const std::string expression)
     std::cout << oss.str() << std::endl;
     
     //Solicita os elementos das matrizes.
-    getMatrizData(node.get()); 
+    order = gHmi.getUserChoice("Insert the matrix order: ");
+    
+    getMatrizData(node.get(), std::stoi(order)); 
 
     gHmi.showMatrix( (exprlib::perform_tree_expression(node.get())).getData());
 } 
@@ -80,9 +83,13 @@ void app_matrix_perform_operation(const std::string expression)
 void app_matrix_perform_determinant(){
 
     double det_result;
+    std::string order;
+
+    //Solicita os elementos das matrizes.
+    order = gHmi.getUserChoice("Insert the matrix order: ");
 
     // Request data matrix.
-    Matrix dataMatrix(gHmi.getMatrix());
+    Matrix dataMatrix(gHmi.getMatrix(std::stoi(order)));
     
     det_result = Lib_matrix::determinant(dataMatrix);
 
@@ -91,7 +98,7 @@ void app_matrix_perform_determinant(){
     std::cout << "Determinante = " << det_result << std::endl;
 }
 
-void getMatrizData(exprlib::Node* node) {
+void getMatrizData(exprlib::Node* node, const int order) {
     if (!node) return;
 
     std::cout << (node->sym.getName()) << "\n";
@@ -100,13 +107,14 @@ void getMatrizData(exprlib::Node* node) {
     if(node->sym.getType() == exprlib::Symbol::Type::VALUE)
     {
         std::cout << "\n Insira os dados da Matriz: " << node->sym.getName() << std::endl;
-        Matrix dataMatrix(gHmi.getMatrix());
+        
+        Matrix dataMatrix(gHmi.getMatrix(order));
         node->sym.setValue(dataMatrix); 
         gHmi.showMatrix(dataMatrix.getData());
     }
     // Request data to childrens 
-    getMatrizData(node->left.get());
-    getMatrizData(node->right.get());
+    getMatrizData(node->left.get(),order);
+    getMatrizData(node->right.get(),order);
 }
 
 bool app_matrix_insert_custom_expression(std::string name, std::string expression)

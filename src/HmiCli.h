@@ -44,7 +44,7 @@ public:
      * @brief Method to request a matrix data from user. 
      * @return A vector of data in bidimension size.
      */
-    std::vector<std::vector<double>> getMatrix() override;
+    std::vector<std::vector<double>> getMatrix(const int order) override;
     /**
      * @brief Method to show a grafic matrix to the user.
      * @param A bidimension vector with data.

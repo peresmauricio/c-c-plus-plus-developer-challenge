@@ -33,9 +33,10 @@ public:
     virtual std::vector<double> getArrayValues() = 0;
     /**
      * @brief Method to request input from the user of matrix values.
+     * @param order Order of matrix
      * @return std::vector<std::vector<double>> two-dimensional vector of matrix values.
      */
-    virtual std::vector<std::vector<double>> getMatrix() = 0;
+    virtual std::vector<std::vector<double>> getMatrix(const int order) = 0;
     /**
      * @brief Method to show a grafic matrix with its values.
      * @param matrix A two-dimensional vector of matrix values.
