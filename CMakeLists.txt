@@ -3,6 +3,8 @@ project(dynamox_challenger LANGUAGES CXX)
 
 find_package(spdlog REQUIRED)
 
+set(PROJECT_NAME matrix_application)
+
 # Set version of C++
 set(CMAKE_CXX_STANDARD 17)
 
@@ -35,7 +37,7 @@ if(NOT PROJECT_SOURCES)
   message(FATAL_ERROR "No source files found for target dynamox_challenger")
 endif()
 
-add_executable(dynamox_challenger ${PROJECT_SOURCES})
+add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
 
 set(HEADERS_INCLUD_DIRS 
   ${CMAKE_SOURCE_DIR}/src
@@ -48,7 +50,7 @@ set(HEADERS_INCLUD_DIRS
   ${CMAKE_SOURCE_DIR}/libs/json/include/ 
 )
 
-target_include_directories(dynamox_challenger PRIVATE ${HEADERS_INCLUD_DIRS})
+target_include_directories(${PROJECT_NAME} PRIVATE ${HEADERS_INCLUD_DIRS})
 
-target_link_libraries(dynamox_challenger PRIVATE stdc++ spdlog::spdlog)
+target_link_libraries(${PROJECT_NAME} PRIVATE stdc++ spdlog::spdlog)
 
