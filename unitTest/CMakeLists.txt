@@ -12,15 +12,18 @@ add_subdirectory(${GOOGLE_TEST_PATH} googletest_build)
 file(GLOB TEST_SOURCES CONFIGURE_DEPENDS
     "${CMAKE_SOURCE_DIR}/*.cpp"
     "${CMAKE_SOURCE_DIR}/../*.cpp"
-    "${CMAKE_SOURCE_DIR}/../src/app_matrix.cpp"
-    "${CMAKE_SOURCE_DIR}/../src/prompt_hmi.cpp"
     "${CMAKE_SOURCE_DIR}/../libs/*.cpp"
+    "${CMAKE_SOURCE_DIR}/../libs/lib_menu/*.cpp"
+    "${CMAKE_SOURCE_DIR}/../libs/lib_expression/*.cpp"
 )
 
 file(GLOB PROJECT_HEADERS CONFIGURE_DEPENDS
     "${CMAKE_SOURCE_DIR}/*.h"
-    "${CMAKE_SOURCE_DIR}/../src/*.h"
+    "${CMAKE_SOURCE_DIR}/../config/*.hpp"
     "${CMAKE_SOURCE_DIR}/../libs/*.h"
+    "${CMAKE_SOURCE_DIR}/../libs/*.hpp"
+    "${CMAKE_SOURCE_DIR}/../libs/lib_menu/*.h"
+    "${CMAKE_SOURCE_DIR}/../libs/lib_expression/*.h"
 )
 
 add_executable(mytests
@@ -30,8 +33,12 @@ add_executable(mytests
 
 target_include_directories(mytests PRIVATE
     ${GOOGLE_TEST_PATH}/googletest/include
-    ${CMAKE_SOURCE_DIR}/../src
+    ${CMAKE_SOURCE_DIR}/../config
     ${CMAKE_SOURCE_DIR}/../libs
+    ${CMAKE_SOURCE_DIR}/../libs/lib_menu
+    ${CMAKE_SOURCE_DIR}/../libs/lib_hmi
+    ${CMAKE_SOURCE_DIR}/../libs/lib_expression
+    ${CMAKE_SOURCE_DIR}/../libs/json/include 
 )
 
 target_link_libraries(mytests PRIVATE gtest_main)
