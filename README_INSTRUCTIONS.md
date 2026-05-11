@@ -80,3 +80,6 @@ In the project folder execute the command:
 
 
 ## Future Implementation
+
+- Improve the syntaxe analyses to accept determinant operations in a expression.
+- Implement a CI flow in the GITHUB to execute regression test.
