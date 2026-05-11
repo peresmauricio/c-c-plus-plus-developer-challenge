@@ -14,6 +14,9 @@
 #include "parser.h"
 #include "tree_expression.h"
 #include "app_progs.hpp"
+#include "parser.h"
+#include <spdlog/spdlog.h>
+#include "config_app_logger.hpp"
 
 
 /// Local definitions  -------------------------------
@@ -104,6 +107,27 @@ void getMatrizData(exprlib::Node* node) {
     // Request data to childrens 
     getMatrizData(node->left.get());
     getMatrizData(node->right.get());
+}
+
+bool app_matrix_insert_custom_expression(std::string name, std::string expression)
+{
+    auto logger = spdlog::get(APP_LOGGER_ID);   // get logger global register.
+
+    if(name.empty() || expression.empty()) return false;
+
+    exprlib::Parser::ValidationResult result;
+    //validate expression
+    result = exprlib::Parser::validateExpressionTokens(expression);
+
+    if(!result.ok){
+        gHmi.show_message(result.error,4);
+        logger->error("app_matrix - %s", result.error);
+        return false;
+    }
+    //looking for the greater index number
+
+    progs_insert_custom_expression(name, expression);
+    return true;
 }
 
 void app_matrix_init() {

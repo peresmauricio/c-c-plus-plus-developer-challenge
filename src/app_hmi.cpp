@@ -16,6 +16,7 @@
 #include "app_matrix.hpp"
 #include <utility>
 #include <string>
+#include <iostream>
 
 using json = nlohmann::json;
 
@@ -66,10 +67,16 @@ bool is_number(const std::string& pString);
 /**
  * @brief Function to select the action to be execute.
  * @param piOption_id int value related to the store database register identification.
- * @return first  - true if executing done, otherwise false.
- * @return second - new state of application.
+ * @return   - true if executing done, otherwise false.
  */
-std::pair<bool,uint8_t> select_action(const int piOption_id);
+bool select_action(const int piOption_id);
+
+/**
+ * @brief Function to manage the input of informations to add a new 
+ * expression operation.
+ * @return true if the expression was add, otherwise false.
+ */
+bool add_custom_expression();
 
 /// Implementation ---------------------------------------------------------
 
@@ -83,7 +90,17 @@ void app_hmi_init(){
     gHmi_running = true;
 }
 
-std::pair<bool,uint8_t> select_action(const int piOption_id)
+void app_hmi_end()
+{
+    gucHmi_ctr_machine = HMI_CTR_FINALIZANDO;
+}
+
+void app_hmi_update()
+{
+    gucHmi_ctr_machine = HMI_CTR_UPDATE;
+}
+
+bool select_action(const int piOption_id)
 {
     std::string item_name, expression;
     
@@ -91,10 +108,19 @@ std::pair<bool,uint8_t> select_action(const int piOption_id)
     
     if(item_name == "Exit")
     {
-        return {true,HMI_CTR_FINALIZANDO};
+        app_hmi_end();
+        return true;
     }
     else if(item_name == "New Expression"){
-
+        if(add_custom_expression()){
+            gHmi.show_message("New expression added.", 2);
+            if(menu_load_menus()){
+                app_hmi_update();
+            } 
+        }
+        else{
+            gHmi.show_message("Fail to add expression!", 2);
+        }
     }
     else if(item_name == "Remove Expression"){
 
@@ -115,10 +141,28 @@ std::pair<bool,uint8_t> select_action(const int piOption_id)
         
         std::this_thread::sleep_for(std::chrono::seconds(5));
     }
-
-    return {true,HMI_CTR_UPDATE};
-    
+    app_hmi_update();
+    return true; //{true,HMI_CTR_UPDATE};
 }
+
+bool add_custom_expression()
+{
+    std::string name, expression;
+    // solicitar um nome
+    name = gHmi.displayQuestion("Insert the name of expression: ");
+
+    // solicitar a expressao
+    expression = gHmi.displayQuestion("Insert the custom expression: ");
+    
+    // validar expressao
+    if(app_matrix_insert_custom_expression(name, expression))
+    {
+        //insert new option
+        return true;
+    }
+    return false;
+}
+
 
 bool menu_load_menus()
 {
@@ -168,7 +212,9 @@ bool is_number(const std::string& pString)
 void app_hmi_control()
 {
     std::string optionSelected;
-
+    bool resultado;
+    bool opt = false;    
+    int iOpt_select;
     do{
         std::string equation;  // store the operation expression to execute.  
         
@@ -187,8 +233,8 @@ void app_hmi_control()
                 // Validate the user input.
                 if(is_number(optionSelected))
                 {
-                    bool opt = false;    
-                    long iOpt_select = std::stol(optionSelected);
+                    opt = false;    
+                    iOpt_select = std::stoi(optionSelected);
                     
                     for(const auto& item : gMenu_list[guIndex_menu].getItems()){
                         
@@ -200,7 +246,8 @@ void app_hmi_control()
                                 guIndex_menu = item.get_id_mx();
                                 gucHmi_ctr_machine = HMI_CTR_UPDATE;
                             }
-                            else{
+                            else
+                            {
                                 gucHmi_ctr_machine = HMI_CTR_PROCESS_REQUEST;
                                 // Store the index of the register in database to restore acton info.
                                 giOption_to_process = item.getId();
@@ -222,9 +269,10 @@ void app_hmi_control()
 
                 break;    
             case HMI_CTR_PROCESS_REQUEST:
-            {
-                auto resultado = select_action(giOption_to_process);
-                if(resultado.first)
+            
+                resultado = select_action(giOption_to_process);
+
+                if(resultado)
                 {
                     gHmi.show_message("Operation Executed!", 2);
                 }
@@ -232,9 +280,8 @@ void app_hmi_control()
                     // generate log about problems.
                 }
                 
-                gucHmi_ctr_machine = resultado.second;
                 break;
-            }    
+               
             case HMI_CTR_INVALID_INPUT:
                 
                 gHmi.show_message("Invalid input value.", 4);
@@ -244,7 +291,7 @@ void app_hmi_control()
 
             case HMI_CTR_FINALIZANDO:
                 //std::cout << "App Finalizando" << std::endl;
-                gHmi.show_message("Finalizing app ...", 4);
+                gHmi.show_message("Finalizing app ...", 2);
                 gHmi_running = false;
                 break;
 

@@ -36,4 +36,12 @@ void app_matrix_perform_operation(const std::string expression);
  */
 void app_matrix_perform_determinant();
 
+/**
+ * @brief Function to adds a new custom expression.
+ * @param name String with the Name of the option.
+ * @param expression String with the math expression. Ex:  "B + C + F" or "( A + C ) * K"
+ * @return true if the expression is ok, otherwise false.
+ */
+bool app_matrix_insert_custom_expression(std::string name, std::string expression);
+
 #endif // APP_MATRIX_H_INCLUDED

@@ -45,12 +45,28 @@ int main() {
 
     }
 
+    std::string HmiCli::displayQuestion(std::string msg)
+    {
+        std::string choice;
+        std::string line(20, '-');
+        std::string header_msg;
+        
+        // construct the menu header
+        header_msg += "--" + line + "--\n";
+        header_msg += "- " + msg + " -\n\n";
+        //system("clear"); // Clear the console for better readability. 
+        std::cout << header_msg << std::endl;
+        std::getline(std::cin >> std::ws, choice);
+    
+        return choice;
+    }
+
     std::string HmiCli::getUserChoice(std::string msg)
     {
         std::string choice;
         std::cout << msg; 
         std::cin >> choice;
-        std::cout << "Choiced Operation: " << choice;
+        //std::cout << "Choiced Operation: " << choice;
         return choice;
     }
 

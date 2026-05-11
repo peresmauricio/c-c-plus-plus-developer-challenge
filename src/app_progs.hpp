@@ -47,4 +47,8 @@ std::string app_progs_get_menu_item_name(int piId_register);
  */
 std::string app_progs_get_expression(int piId_register);
 
+
+void progs_insert_custom_expression(const std::string& name, const std::string& expression);
+
+
 #endif // PROGS_H_INCLUDED

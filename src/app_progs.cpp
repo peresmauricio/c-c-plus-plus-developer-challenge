@@ -23,11 +23,24 @@ void insert_defaul_data(json &pdata_base);
 void insert_defaul_menu(json &pdata_base);
 
 /**
+ * @brief Function to looking for the least
+ * index operation. 
+ * @return The value of least index operation.
+ */
+int progs_get_last_operation_index();
+
+/**
  * @brief Get number of menus
  * @details Read local data to identify the number of menus in the system
  * @return Number of menus.
  */
 int get_number_of_menus();
+
+/**
+ * @brief Get the last_register index
+ * @return Value of last index.
+ */
+int progs_get_last_register();
 
 /// Function Implementations ------------------- 
 
@@ -122,18 +135,55 @@ std::string app_progs_get_expression(int piId_register){
     return "";
 }
 
+int progs_get_last_operation_index(){
+    int great_ind = 0;
+    try{
+        for(const auto& item : gData){
+            // looking for the great operator index.
+            if(item.value("id_m", -1) == 1){
+                if(item.value("ind",-1) > great_ind)
+                {
+                    // update the great index.
+                    great_ind = item.value("ind",-1);
+                }
+            }
+        }
+        return great_ind;
+    }catch (const json::parse_error& e) {
+        std::cout << "Error: " << e.what() << std::endl;
+        // Todo enviar para o log
+    }
+    return -1;
+}
 
-void insert_menu_item(int id, const std::string& name, const std::string& expression)
+int progs_get_last_register()
 {
+    try{
+        json ultimo = gData.back();
+        return ultimo.value("id",-1);
+
+    }catch (const json::parse_error& e) {
+        std::cout << "Error: " << e.what() << std::endl;
+        // Todo enviar para o log
+    }
+    return -1;
+}
+
+void progs_insert_custom_expression(const std::string& name, const std::string& expression)
+{
+    int last_operator_index;
+    int register_id;
     //check the base of menu to identify the local of menu
+    last_operator_index = progs_get_last_operation_index();
+    register_id = progs_get_last_register();
 
-    //check if the id exist
+    if((last_operator_index != -1) && (register_id != -1)){
 
-    // check the last base id position to insert the new menu
-
-
-
-    //pdata_base.push_back({{"id", id}, {"op", name}, {"expression", expression}});
+        register_id++;
+        last_operator_index++;
+        gData.push_back({{"id", register_id},{"id_m", 1},{"id_mx", 1},{"ind", last_operator_index},{"op", name},{"expression", expression}});
+    }
+    drv_save_data_base(DATA_PATH, gData);
 }
 
 /**

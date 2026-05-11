@@ -24,6 +24,12 @@ public:
      */
     void displayMenu(const Menu& m ) override;
     /**
+     * @brief Method to show a question ang get the user value.
+     * @param msg Message to show to the user.
+     * @return string with the user answer.
+     */
+    std::string displayQuestion(std::string msg);
+    /**
      * @brief Method to wait the user input choice.
      * @param msg Message to be showed to the user before wait the user answer.
      * @return String Value of user response chain captured from terminal input.

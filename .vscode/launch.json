@@ -1,11 +1,12 @@
 {
     "version": "0.2.0",
     "configurations": [
+
         {
-            "name": "Debug dynamox_challenger",
+            "name": "Debug matrix_application",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/dynamox_challenger",
+            "program": "${workspaceFolder}/build/matrix_application",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/build",
