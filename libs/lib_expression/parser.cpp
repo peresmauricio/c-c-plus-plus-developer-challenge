@@ -19,6 +19,14 @@ bool Parser::isOperator(const std::string& t) {
     return false;
 }
 
+bool Parser::isParenOpen(const std::string& t){
+    return t == "(";
+}
+
+bool Parser::isParenClose(const std::string& t){
+    return t == ")";
+}
+
 bool Parser::isNumberToken(const std::string& t) {
     if (t.empty()) return false;
     
@@ -27,6 +35,67 @@ bool Parser::isNumberToken(const std::string& t) {
     return true;
 }
 
+
+Parser::ValidationResult Parser::validateExpressionTokens(const std::string& expr) {
+    std::istringstream iss(expr);
+    std::string tok;
+    int idx = 0;
+    int balance = 0;    // Control the number of parent open and parent close.
+    bool expectOperand = true; // start waiting a operand or "("
+
+    bool there_is_token = false;
+
+    while (iss >> tok) {
+        there_is_token = true;
+
+        if (expectOperand) {
+            if (isParenOpen(tok)) {
+                balance++;
+              // check if it's a possible operand.  
+            } else if (!isOperator(tok)) {
+                expectOperand = false; // depois de número, esperamos operador ou ")"
+            } else {
+                return {false,
+                        "Waiting operand or '(', but get e'" + tok + "'",idx};
+            } 
+        } 
+        else // Waiting operator or parent close ")" 
+        { 
+            if (isOperator(tok)) {
+                expectOperand = true; // Change to wait operand in the next token.
+            } 
+            else if (isParenClose(tok)) 
+            {
+                balance--;
+                if (balance < 0) 
+                {
+                    return {false, "Parent close ')' without parent open '(", idx};
+                }
+                // after a parent close, continue to waiting a operator or a parent close ')'
+            } else {
+                return {false,
+                        "Esperava um operador (+,-,*,/) ou ')' e encontrei '" + tok + "'",
+                        idx};
+            }
+        }
+        idx++;
+    }
+
+    if (!there_is_token) {
+        return {false, "Empty Expression", 0};
+    }
+
+    if (expectOperand) {
+        // terminou esperando operando => acabou com operador ou "(" aberto
+        return {false, "Expression incomplete.", idx - 1};
+    }
+
+    if (balance != 0) {
+        return {false, "Expression incomplete. Parentheses not balanced. Missing parent close'(' ", idx - 1};
+    }
+
+    return {true, "", -1};
+}
 
 NodePtr Parser::parseInfix(const std::string& expr) {
     // guarda a sub-árvore. NodePtr - aponta para um nó  (valor ou árvore montada) 

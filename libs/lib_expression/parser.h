@@ -4,6 +4,10 @@
 
 namespace exprlib {
 
+
+
+
+
 /** 
  * @brief Class for convert a string expression in a node tree of operations.
  * @details This methods are use to analyse the math expression. Analyse the 
@@ -12,6 +16,13 @@ namespace exprlib {
  */
 class Parser {
 public:
+
+    struct ValidationResult {
+        bool ok;
+        std::string error;
+        int tokenIndex; // índice do token onde deu erro (0-based)
+    };
+
     // parse("3 + 5 * 2") expression
     /**
      * @brief method to construct the operation tree.
@@ -19,6 +30,12 @@ public:
      * @return Top tree node of math operation.
      */
     static NodePtr parseInfix(const std::string& expr);
+    /**
+     * @brief Method to validate a expression.
+     * @param expr String with expression to be analyse.
+     * @return Object with informations about analyses. 
+     */
+    static ValidationResult validateExpressionTokens(const std::string& expr);
 
 private:
     /**
@@ -39,6 +56,18 @@ private:
      * @return true - if is a expression operator.
      */
     static bool isOperator(const std::string& t);
+    /**
+     * @brief Method to check if the token is a parent open
+     * @param t String with token to be analyse.
+     * @return true if it's the parent open, otherwise false.
+     */
+    static bool isParenOpen(const std::string& t);
+    /**
+     * @brief Method to check if the token is a parent close
+     * @param t String with token to be analyse.
+     * @return true if it's the parent close, otherwise false.
+     */
+    static bool isParenClose(const std::string& t);
 };
 
 } // namespace exprlib
